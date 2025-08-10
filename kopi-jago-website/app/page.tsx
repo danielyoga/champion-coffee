@@ -15,16 +15,32 @@ export default function ChampionCoffeeLanding() {
   const handleRoleSelect = (role: string) => {
     setSelectedRole(role)
 
-    // If user is not connected, connect wallet first
+    // If user is connected, navigate to the appropriate dashboard
+    if (userData) {
+      if (role === "customer") {
+        router.push("/customer")
+      } else if (role === "jagoan") {
+        router.push("/jagoan")
+      }
+    }
+  }
+
+  const handleCustomerButtonClick = (e: React.MouseEvent) => {
+    e.stopPropagation() // Prevent card click event
+
     if (!userData) {
       connectWallet()
-      return
-    }
-
-    // Navigate to the appropriate dashboard
-    if (role === "customer") {
+    } else {
       router.push("/customer")
-    } else if (role === "jagoan") {
+    }
+  }
+
+  const handleJagoanButtonClick = (e: React.MouseEvent) => {
+    e.stopPropagation() // Prevent card click event
+
+    if (!userData) {
+      connectWallet()
+    } else {
       router.push("/jagoan")
     }
   }
@@ -70,7 +86,11 @@ export default function ChampionCoffeeLanding() {
                 <CardDescription className="text-gray-700">Order premium coffee from local merchants</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                <Button className="w-full bg-red-600 hover:bg-red-700 text-white" size="lg">
+                <Button
+                  className="w-full bg-red-600 hover:bg-red-700 text-white"
+                  size="lg"
+                  onClick={handleCustomerButtonClick}
+                >
                   {userData ? "Start Ordering" : "Connect Wallet to Order"}
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </Button>
@@ -93,7 +113,11 @@ export default function ChampionCoffeeLanding() {
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                <Button className="w-full bg-black hover:bg-gray-800 text-white transition-colors" size="lg">
+                <Button
+                  className="w-full bg-black hover:bg-gray-800 text-white transition-colors"
+                  size="lg"
+                  onClick={handleJagoanButtonClick}
+                >
                   {userData ? "Become a Jagoan" : "Connect Wallet to Join"}
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </Button>

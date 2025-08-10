@@ -1,5 +1,53 @@
 # Champion Coffee - Stacks Wallet Integration
 
+**Smart Contract Address**: `ST1R6WTW58RQFZPMMFYHZA663838XZDW1RVXC58N9.umkm-alliance-1`
+
+## Project: Champion Coffee - UMKM Alliance Platform
+
+### 🎯 Problem Statement
+
+**Masalah di Indonesia:**
+- UMKM (Usaha Mikro, Kecil, dan Menengah) di Indonesia menghadapi kesulitan dalam mengakses modal, teknologi, dan pasar yang lebih luas
+- Terbatasnya akses ke sistem pembayaran digital dan infrastruktur teknologi yang modern
+- Kurangnya transparansi dan kepercayaan dalam transaksi bisnis antar UMKM
+- Sulitnya tracking dan verifikasi produk dari hulu ke hilir
+
+**Siapa yang terdampak?**
+- UMKM di sektor makanan dan minuman, khususnya kopi
+- Konsumen yang ingin mendapatkan produk berkualitas dengan transparansi
+- Ekosistem UMKM yang membutuhkan kolaborasi dan dukungan
+
+**Mengapa masalah ini penting?**
+- UMKM merupakan tulang punggung perekonomian Indonesia (99.9% dari total usaha)
+- Potensi pertumbuhan ekonomi yang besar jika UMKM dapat dioptimalkan
+- Kebutuhan akan sistem yang adil dan transparan untuk semua pihak
+
+**Current Solution & Limitations:**
+- Sistem konvensional bergantung pada perantara dan lembaga keuangan tradisional
+- Kurangnya transparansi dalam rantai pasok dan pembayaran
+- Biaya transaksi yang tinggi dan waktu penyelesaian yang lama
+- Sulitnya verifikasi keaslian produk dan kualitas
+
+### 💡 Solution Overview
+
+**Smart Contract Solution:**
+- Menggunakan blockchain Stacks untuk menciptakan ekosistem UMKM yang terdesentralisasi
+- Smart contract memastikan transparansi dan kepercayaan dalam setiap transaksi
+- Sistem reward dan governance yang adil untuk semua partisipan
+- Integrasi wallet untuk pembayaran yang aman dan cepat
+
+**Mengapa lebih baik dari solusi konvensional?**
+- Transparansi penuh dalam setiap transaksi
+- Pengurangan biaya perantara dan transaksi
+- Keamanan dan immutability data
+- Akses global tanpa batasan geografis
+
+**Value Proposition:**
+- **Benefit untuk user**: Akses mudah ke produk berkualitas, pembayaran aman, dan transparansi penuh
+- **Benefit untuk ecosystem**: Pertumbuhan UMKM yang berkelanjutan, kolaborasi antar pelaku usaha, dan inovasi teknologi
+
+---
+
 A modern coffee ordering platform built with Next.js and integrated with Stacks blockchain for seamless wallet connectivity.
 
 ## 🚀 Features
