@@ -1,0 +1,9 @@
+#V2
+::help
+::functions
+clarinet console
+::help
+::get_contracts
+::help
+::get_assets_maps
+::help
