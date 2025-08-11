@@ -6,11 +6,12 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Store, ShoppingBag, Coffee, ArrowRight } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useStacks } from "@/hooks/use-stacks"
+import { ClientOnly } from "@/components/client-only"
 
-export default function ChampionCoffeeLanding() {
+function ChampionCoffeeLandingContent() {
   const [selectedRole, setSelectedRole] = useState<string | null>(null)
   const router = useRouter()
-  const { userData, connectWallet } = useStacks()
+  const { userData, connectWallet, isClient } = useStacks()
 
   const handleRoleSelect = (role: string) => {
     setSelectedRole(role)
@@ -91,7 +92,7 @@ export default function ChampionCoffeeLanding() {
                   size="lg"
                   onClick={handleCustomerButtonClick}
                 >
-                  {userData ? "Start Ordering" : "Connect Wallet to Order"}
+                  {isClient && userData ? "Start Ordering" : "Connect Wallet to Order"}
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </Button>
               </CardContent>
@@ -118,7 +119,7 @@ export default function ChampionCoffeeLanding() {
                   size="lg"
                   onClick={handleJagoanButtonClick}
                 >
-                  {userData ? "Become a Jagoan" : "Connect Wallet to Join"}
+                  {isClient && userData ? "Become a Jagoan" : "Connect Wallet to Join"}
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </Button>
               </CardContent>
@@ -127,5 +128,13 @@ export default function ChampionCoffeeLanding() {
         </div>
       </div>
     </div>
+  )
+}
+
+export default function ChampionCoffeeLanding() {
+  return (
+    <ClientOnly>
+      <ChampionCoffeeLandingContent />
+    </ClientOnly>
   )
 }

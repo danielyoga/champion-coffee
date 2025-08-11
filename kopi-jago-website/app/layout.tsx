@@ -4,8 +4,8 @@ import { GeistMono } from 'geist/font/mono'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'v0 App',
-  description: 'Created with v0',
+  title: 'Champion Coffee - UMKM Alliance Platform',
+  description: 'A modern coffee ordering platform built with Next.js and integrated with Stacks blockchain for seamless wallet connectivity.',
   generator: 'v0.dev',
 }
 
@@ -17,7 +17,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <style>{`
+        <style suppressHydrationWarning={true}>{`
 html {
   font-family: ${GeistSans.style.fontFamily};
   --font-sans: ${GeistSans.variable};

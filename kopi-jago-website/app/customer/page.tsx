@@ -3,36 +3,90 @@
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Coffee, Wallet, Plus, ShoppingCart, ArrowLeft } from "lucide-react"
+import { Coffee, Wallet, Plus, ShoppingCart, ArrowLeft, RefreshCw, TestTube } from "lucide-react"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { useStacks } from "@/hooks/use-stacks"
-import { abbreviateAddress, formatStx } from "@/lib/stx-utils"
+import { abbreviateAddress, formatStx, testContractBalance } from "@/lib/stx-utils"
+import { ClientOnly } from "@/components/client-only"
 
-export default function CustomerDashboard() {
-  const [balance, setBalance] = useState(50000)
+function CustomerDashboardContent() {
   const router = useRouter()
-  const { userData, stxBalance, disconnectWallet } = useStacks()
+  const { userData, stxBalance, allianceTokenBalance, disconnectWallet, handleMintForPurchase, refreshAllianceTokenBalance, isClient } = useStacks()
+  const [contractBalance, setContractBalance] = useState<number | null>(null)
 
   const handlePurchase = (price: number) => {
-    if (balance >= price) {
-      setBalance(balance - price)
+    if (allianceTokenBalance >= price) {
+      // In a real implementation, you would call a contract function to transfer tokens
       alert("Purchase successful!")
+      // Refresh the balance after purchase
+      refreshAllianceTokenBalance()
     } else {
       alert("Insufficient balance!")
     }
   }
 
-  const handleTopUp = () => {
-    // Simulate wallet interaction
-    alert("Connecting to wallet...")
-    // In a real implementation, this would connect to the user's wallet
-    // and allow them to approve the transaction
-    setTimeout(() => {
-      const amount = 10000 // Default top-up amount
-      setBalance(balance + amount)
-      alert(`Top up successful! Added Rp ${amount.toLocaleString()} to your balance.`)
-    }, 2000)
+  const handleTopUp = async () => {
+    console.log("Top up button clicked!") // Debug log
+    console.log("userData:", userData) // Debug log
+    console.log("isClient:", isClient) // Debug log
+
+    if (!userData) {
+      console.log("No userData, showing alert") // Debug log
+      alert("Please connect your wallet first!")
+      return
+    }
+
+    console.log("UserData exists, proceeding...") // Debug log
+
+    try {
+      console.log("Calling handleMintForPurchase...") // Debug log
+      // Call the mint-for-purchase function from the smart contract
+      await handleMintForPurchase()
+      console.log("handleMintForPurchase completed successfully") // Debug log
+    } catch (error) {
+      console.error("Top up failed:", error)
+      const errorMessage = error instanceof Error ? error.message : "Unknown error occurred"
+      alert("Error: " + errorMessage) // Show error to user
+      // Error handling is done in the contract call function
+    }
+  }
+
+  const handleButtonClick = (e: React.MouseEvent) => {
+    console.log("handleButtonClick called!") // Debug log
+    e.preventDefault()
+    e.stopPropagation()
+    console.log("Button clicked!") // Debug log
+    console.log("About to call handleTopUp...") // Debug log
+
+    // Add a simple alert to test if the click is working
+    alert("Button clicked! Testing...")
+
+    handleTopUp()
+  }
+
+  const handleRefreshBalance = () => {
+    console.log("Manual refresh clicked")
+    console.log("Current allianceTokenBalance:", allianceTokenBalance)
+    console.log("User data:", userData)
+    refreshAllianceTokenBalance()
+  }
+
+  const handleTestContractBalance = async () => {
+    if (!userData) {
+      alert("Please connect your wallet first!")
+      return
+    }
+
+    try {
+      const address = userData.profile.stxAddress.testnet
+      console.log("Testing contract balance for address:", address)
+      const balance = await testContractBalance(address)
+      setContractBalance(balance)
+      console.log("Contract balance result:", balance)
+    } catch (error) {
+      console.error("Error testing contract balance:", error)
+    }
   }
 
   return (
@@ -53,7 +107,7 @@ export default function CustomerDashboard() {
               </div>
             </div>
             <div className="flex items-center space-x-4">
-              {userData && (
+              {isClient && userData && (
                 <div className="flex items-center space-x-2">
                   <span className="text-sm text-gray-600">STX: {formatStx(stxBalance)}</span>
                   <span className="text-sm text-gray-600">|</span>
@@ -82,14 +136,61 @@ export default function CustomerDashboard() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="text-center">
-                  <div className="text-3xl font-bold text-black">Rp {balance.toLocaleString()}</div>
-                  <div className="text-sm text-gray-600">Available Balance</div>
+                  {allianceTokenBalance > 0 ? (
+                    <>
+                      <div className="text-3xl font-bold text-black">{allianceTokenBalance.toLocaleString()} Alliance Tokens</div>
+                      <div className="text-sm text-gray-600">Available Balance</div>
+                    </>
+                  ) : (
+                    <>
+                      <div className="text-3xl font-bold text-black">0 Alliance Tokens</div>
+                      <div className="text-sm text-gray-600">No tokens yet - Get your first tokens!</div>
+                    </>
+                  )}
                 </div>
 
-                <Button onClick={handleTopUp} className="w-full bg-red-600 hover:bg-red-700 text-white">
-                  <Plus className="w-4 h-4 mr-2" />
-                  Top Up Balance
-                </Button>
+                <div className="space-y-2">
+                  <Button
+                    onClick={handleButtonClick}
+                    className="w-full bg-red-600 hover:bg-red-700 text-white relative z-10 cursor-pointer"
+                    style={{ pointerEvents: 'auto' }}
+                  >
+                    <Plus className="w-4 h-4 mr-2" />
+                    {allianceTokenBalance > 0 ? "Get More Alliance Tokens" : "Get Your First Alliance Tokens"}
+                  </Button>
+
+                  <Button
+                    onClick={handleRefreshBalance}
+                    variant="outline"
+                    className="w-full"
+                    size="sm"
+                  >
+                    <RefreshCw className="w-4 h-4 mr-2" />
+                    Refresh Balance
+                  </Button>
+
+                  <Button
+                    onClick={handleTestContractBalance}
+                    variant="outline"
+                    className="w-full"
+                    size="sm"
+                  >
+                    <TestTube className="w-4 h-4 mr-2" />
+                    Test Contract Balance
+                  </Button>
+                </div>
+
+                {/* Debug info */}
+                <div className="text-xs text-gray-500 mt-4 p-2 bg-gray-100 rounded">
+                  <div>Debug Info:</div>
+                  <div>Balance: {allianceTokenBalance}</div>
+                  <div>Contract Balance: {contractBalance !== null ? contractBalance : 'Not tested'}</div>
+                  <div>Is Client: {isClient ? 'Yes' : 'No'}</div>
+                  <div>User Connected: {userData ? 'Yes' : 'No'}</div>
+                  {userData && (
+                    <div>Address: {abbreviateAddress(userData.profile.stxAddress.testnet)}</div>
+                  )}
+                </div>
               </CardContent>
             </Card>
           </div>
@@ -119,7 +220,7 @@ export default function CustomerDashboard() {
                     <div>
                       <h3 className="text-lg font-bold text-black">Hojicha Lychee Tea</h3>
                       <p className="text-sm text-gray-600">Refreshing hojicha tea with sweet lychee</p>
-                      <div className="text-xl font-bold text-red-600 mt-2">Rp 15,000</div>
+                      <div className="text-xl font-bold text-red-600 mt-2">15,000 Tokens</div>
                     </div>
                     <Button
                       onClick={() => handlePurchase(15000)}
@@ -140,7 +241,7 @@ export default function CustomerDashboard() {
                     <div>
                       <h3 className="text-lg font-bold text-black">Premium Coffee</h3>
                       <p className="text-sm text-gray-600">Artisan coffee blend</p>
-                      <div className="text-xl font-bold text-red-600 mt-2">Rp 12,000</div>
+                      <div className="text-xl font-bold text-red-600 mt-2">12,000 Tokens</div>
                     </div>
                     <Button
                       onClick={() => handlePurchase(12000)}
@@ -156,5 +257,13 @@ export default function CustomerDashboard() {
         </div>
       </div>
     </div>
+  )
+}
+
+export default function CustomerDashboard() {
+  return (
+    <ClientOnly>
+      <CustomerDashboardContent />
+    </ClientOnly>
   )
 }
