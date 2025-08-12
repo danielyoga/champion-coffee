@@ -13,7 +13,7 @@ describe("umkm alliance contract", () => {
             const merchantName = "Test Merchant";
 
             const result = simnet.callPublicFn(
-                'umkm-alliance',
+                'umkm-alliance-3',
                 'register-merchant',
                 [Cl.address(merchantAddress), Cl.stringAscii(merchantName)],
                 merchantAddress
@@ -26,7 +26,7 @@ describe("umkm alliance contract", () => {
             const emptyName = "";
 
             const result = simnet.callPublicFn(
-                'umkm-alliance',
+                'umkm-alliance-3',
                 'register-merchant',
                 [Cl.address(merchantAddress), Cl.stringAscii(emptyName)],
                 merchantAddress
@@ -39,7 +39,7 @@ describe("umkm alliance contract", () => {
             const merchantName = "Duplicate Merchant";
 
             const firstResult = simnet.callPublicFn(
-                'umkm-alliance',
+                'umkm-alliance-3',
                 'register-merchant',
                 [Cl.address(merchantAddress), Cl.stringAscii(merchantName)],
                 merchantAddress
@@ -47,7 +47,7 @@ describe("umkm alliance contract", () => {
             expect(firstResult.result).toEqual({ type: 'ok', value: { type: 'true' } });
 
             const secondResult = simnet.callPublicFn(
-                'umkm-alliance',
+                'umkm-alliance-3',
                 'register-merchant',
                 [Cl.address(merchantAddress), Cl.stringAscii(merchantName)],
                 merchantAddress
@@ -62,7 +62,7 @@ describe("umkm alliance contract", () => {
             const merchantName = "Mint Test Merchant";
 
             const registerResult = simnet.callPublicFn(
-                'umkm-alliance',
+                'umkm-alliance-3',
                 'register-merchant',
                 [Cl.address(merchantAddress), Cl.stringAscii(merchantName)],
                 merchantAddress
@@ -70,7 +70,7 @@ describe("umkm alliance contract", () => {
             expect(registerResult.result).toEqual({ type: 'ok', value: { type: 'true' } });
 
             const mintResult = simnet.callPublicFn(
-                'umkm-alliance',
+                'umkm-alliance-3',
                 'mint-for-purchase',
                 [Cl.address(merchantAddress)],
                 merchantAddress
@@ -82,7 +82,7 @@ describe("umkm alliance contract", () => {
             const unregisteredAddress = wallet2;
 
             const result = simnet.callPublicFn(
-                'umkm-alliance',
+                'umkm-alliance-3',
                 'mint-for-purchase',
                 [Cl.address(unregisteredAddress)],
                 unregisteredAddress
@@ -95,7 +95,7 @@ describe("umkm alliance contract", () => {
 
             // First mint should succeed (balance = 100000)
             const firstMintResult = simnet.callPublicFn(
-                'umkm-alliance',
+                'umkm-alliance-3',
                 'mint-for-purchase',
                 [Cl.address(customerAddress)],
                 customerAddress
@@ -104,7 +104,7 @@ describe("umkm alliance contract", () => {
 
             // Second mint should fail (balance = 200000 > 10000)
             const secondMintResult = simnet.callPublicFn(
-                'umkm-alliance',
+                'umkm-alliance-3',
                 'mint-for-purchase',
                 [Cl.address(customerAddress)],
                 customerAddress
@@ -121,7 +121,7 @@ describe("umkm alliance contract", () => {
 
             // Step 1: Register merchant
             const registerMerchantResult = simnet.callPublicFn(
-                'umkm-alliance',
+                'umkm-alliance-3',
                 'register-merchant',
                 [Cl.address(merchantAddress), Cl.stringAscii(merchantName)],
                 merchantAddress
@@ -130,7 +130,7 @@ describe("umkm alliance contract", () => {
 
             // Step 2: Customer mints tokens
             const mintResult = simnet.callPublicFn(
-                'umkm-alliance',
+                'umkm-alliance-3',
                 'mint-for-purchase',
                 [Cl.address(customerAddress)],
                 customerAddress
@@ -139,7 +139,7 @@ describe("umkm alliance contract", () => {
 
             // Step 3: Customer redeems tokens to merchant
             const redeemResult = simnet.callPublicFn(
-                'umkm-alliance',
+                'umkm-alliance-3',
                 'redeem-at-merchant',
                 [Cl.address(merchantAddress), Cl.address(customerAddress), Cl.uint(50000)],
                 customerAddress
@@ -152,7 +152,7 @@ describe("umkm alliance contract", () => {
             const customerAddress = wallet1;
 
             const result = simnet.callPublicFn(
-                'umkm-alliance',
+                'umkm-alliance-3',
                 'redeem-at-merchant',
                 [Cl.address(unregisteredMerchant), Cl.address(customerAddress), Cl.uint(100)],
                 customerAddress
@@ -166,7 +166,7 @@ describe("umkm alliance contract", () => {
             const merchantName = "Insufficient Balance Test";
 
             const registerResult = simnet.callPublicFn(
-                'umkm-alliance',
+                'umkm-alliance-3',
                 'register-merchant',
                 [Cl.address(merchantAddress), Cl.stringAscii(merchantName)],
                 merchantAddress
@@ -174,7 +174,7 @@ describe("umkm alliance contract", () => {
             expect(registerResult.result).toEqual({ type: 'ok', value: { type: 'true' } });
 
             const redeemResult = simnet.callPublicFn(
-                'umkm-alliance',
+                'umkm-alliance-3',
                 'redeem-at-merchant',
                 [Cl.address(merchantAddress), Cl.address(customerAddress), Cl.uint(100)],
                 customerAddress
@@ -188,7 +188,7 @@ describe("umkm alliance contract", () => {
             const merchantName = "Zero Amount Test";
 
             const registerResult = simnet.callPublicFn(
-                'umkm-alliance',
+                'umkm-alliance-3',
                 'register-merchant',
                 [Cl.address(merchantAddress), Cl.stringAscii(merchantName)],
                 merchantAddress
@@ -196,7 +196,7 @@ describe("umkm alliance contract", () => {
             expect(registerResult.result).toEqual({ type: 'ok', value: { type: 'true' } });
 
             const redeemResult = simnet.callPublicFn(
-                'umkm-alliance',
+                'umkm-alliance-3',
                 'redeem-at-merchant',
                 [Cl.address(merchantAddress), Cl.address(customerAddress), Cl.uint(0)],
                 customerAddress
@@ -211,7 +211,7 @@ describe("umkm alliance contract", () => {
             const merchantName = "Status Test Merchant";
 
             const registerResult = simnet.callPublicFn(
-                'umkm-alliance',
+                'umkm-alliance-3',
                 'register-merchant',
                 [Cl.address(merchantAddress), Cl.stringAscii(merchantName)],
                 merchantAddress
@@ -219,7 +219,7 @@ describe("umkm alliance contract", () => {
             expect(registerResult.result).toEqual({ type: 'ok', value: { type: 'true' } });
 
             const statusResult = simnet.callReadOnlyFn(
-                'umkm-alliance',
+                'umkm-alliance-3',
                 'is-merchant',
                 [Cl.address(merchantAddress)],
                 merchantAddress
@@ -231,7 +231,7 @@ describe("umkm alliance contract", () => {
             const unregisteredAddress = wallet2;
 
             const result = simnet.callReadOnlyFn(
-                'umkm-alliance',
+                'umkm-alliance-3',
                 'is-merchant',
                 [Cl.address(unregisteredAddress)],
                 unregisteredAddress
@@ -246,7 +246,7 @@ describe("umkm alliance contract", () => {
             const merchantName = "Info Test Merchant";
 
             const registerResult = simnet.callPublicFn(
-                'umkm-alliance',
+                'umkm-alliance-3',
                 'register-merchant',
                 [Cl.address(merchantAddress), Cl.stringAscii(merchantName)],
                 merchantAddress
@@ -254,7 +254,7 @@ describe("umkm alliance contract", () => {
             expect(registerResult.result).toEqual({ type: 'ok', value: { type: 'true' } });
 
             const infoResult = simnet.callReadOnlyFn(
-                'umkm-alliance',
+                'umkm-alliance-3',
                 'get-merchant-info',
                 [Cl.address(merchantAddress)],
                 merchantAddress
@@ -275,7 +275,7 @@ describe("umkm alliance contract", () => {
             const unregisteredAddress = wallet2;
 
             const result = simnet.callReadOnlyFn(
-                'umkm-alliance',
+                'umkm-alliance-3',
                 'get-merchant-info',
                 [Cl.address(unregisteredAddress)],
                 unregisteredAddress
@@ -290,7 +290,7 @@ describe("umkm alliance contract", () => {
 
             // Mint tokens first
             const mintResult = simnet.callPublicFn(
-                'umkm-alliance',
+                'umkm-alliance-3',
                 'mint-for-purchase',
                 [Cl.address(customerAddress)],
                 customerAddress
@@ -299,7 +299,7 @@ describe("umkm alliance contract", () => {
 
             // Check balance
             const balanceResult = simnet.callReadOnlyFn(
-                'umkm-alliance',
+                'umkm-alliance-3',
                 'get-balance',
                 [Cl.address(customerAddress)],
                 customerAddress
@@ -311,7 +311,7 @@ describe("umkm alliance contract", () => {
             const emptyAddress = wallet1;
 
             const result = simnet.callReadOnlyFn(
-                'umkm-alliance',
+                'umkm-alliance-3',
                 'get-balance',
                 [Cl.address(emptyAddress)],
                 emptyAddress
@@ -323,7 +323,7 @@ describe("umkm alliance contract", () => {
     describe("get-total-supply function", () => {
         it("should return total supply", () => {
             const result = simnet.callReadOnlyFn(
-                'umkm-alliance',
+                'umkm-alliance-3',
                 'get-total-supply',
                 [],
                 wallet1
@@ -342,7 +342,7 @@ describe("umkm alliance contract", () => {
 
             // Step 1: Register both merchants
             const registerFromResult = simnet.callPublicFn(
-                'umkm-alliance',
+                'umkm-alliance-3',
                 'register-merchant',
                 [Cl.address(fromMerchant), Cl.stringAscii(fromMerchantName)],
                 fromMerchant
@@ -350,7 +350,7 @@ describe("umkm alliance contract", () => {
             expect(registerFromResult.result).toEqual({ type: 'ok', value: { type: 'true' } });
 
             const registerToResult = simnet.callPublicFn(
-                'umkm-alliance',
+                'umkm-alliance-3',
                 'register-merchant',
                 [Cl.address(toMerchant), Cl.stringAscii(toMerchantName)],
                 toMerchant
@@ -359,7 +359,7 @@ describe("umkm alliance contract", () => {
 
             // Step 2: Customer mints tokens
             const mintResult = simnet.callPublicFn(
-                'umkm-alliance',
+                'umkm-alliance-3',
                 'mint-for-purchase',
                 [Cl.address(customerAddress)],
                 customerAddress
@@ -368,7 +368,7 @@ describe("umkm alliance contract", () => {
 
             // Step 3: Customer redeems tokens to fromMerchant
             const redeemResult = simnet.callPublicFn(
-                'umkm-alliance',
+                'umkm-alliance-3',
                 'redeem-at-merchant',
                 [Cl.address(fromMerchant), Cl.address(customerAddress), Cl.uint(50000)],
                 customerAddress
@@ -377,7 +377,7 @@ describe("umkm alliance contract", () => {
 
             // Step 4: fromMerchant transfers tokens to toMerchant
             const transferResult = simnet.callPublicFn(
-                'umkm-alliance',
+                'umkm-alliance-3',
                 'transfer-between-merchants',
                 [Cl.address(fromMerchant), Cl.address(toMerchant), Cl.uint(25000)],
                 fromMerchant
@@ -392,7 +392,7 @@ describe("umkm alliance contract", () => {
 
             // Register only toMerchant
             const registerToResult = simnet.callPublicFn(
-                'umkm-alliance',
+                'umkm-alliance-3',
                 'register-merchant',
                 [Cl.address(toMerchant), Cl.stringAscii(toMerchantName)],
                 toMerchant
@@ -401,7 +401,7 @@ describe("umkm alliance contract", () => {
 
             // Try to transfer from unregistered merchant
             const transferResult = simnet.callPublicFn(
-                'umkm-alliance',
+                'umkm-alliance-3',
                 'transfer-between-merchants',
                 [Cl.address(unregisteredFrom), Cl.address(toMerchant), Cl.uint(100)],
                 unregisteredFrom
@@ -416,7 +416,7 @@ describe("umkm alliance contract", () => {
 
             // Register only fromMerchant
             const registerFromResult = simnet.callPublicFn(
-                'umkm-alliance',
+                'umkm-alliance-3',
                 'register-merchant',
                 [Cl.address(fromMerchant), Cl.stringAscii(fromMerchantName)],
                 fromMerchant
@@ -425,7 +425,7 @@ describe("umkm alliance contract", () => {
 
             // Try to transfer to unregistered merchant
             const transferResult = simnet.callPublicFn(
-                'umkm-alliance',
+                'umkm-alliance-3',
                 'transfer-between-merchants',
                 [Cl.address(fromMerchant), Cl.address(unregisteredTo), Cl.uint(100)],
                 fromMerchant
@@ -440,7 +440,7 @@ describe("umkm alliance contract", () => {
             const toMerchantName = "Rich To Merchant";
 
             const registerFromResult = simnet.callPublicFn(
-                'umkm-alliance',
+                'umkm-alliance-3',
                 'register-merchant',
                 [Cl.address(fromMerchant), Cl.stringAscii(fromMerchantName)],
                 fromMerchant
@@ -448,7 +448,7 @@ describe("umkm alliance contract", () => {
             expect(registerFromResult.result).toEqual({ type: 'ok', value: { type: 'true' } });
 
             const registerToResult = simnet.callPublicFn(
-                'umkm-alliance',
+                'umkm-alliance-3',
                 'register-merchant',
                 [Cl.address(toMerchant), Cl.stringAscii(toMerchantName)],
                 toMerchant
@@ -456,7 +456,7 @@ describe("umkm alliance contract", () => {
             expect(registerToResult.result).toEqual({ type: 'ok', value: { type: 'true' } });
 
             const transferResult = simnet.callPublicFn(
-                'umkm-alliance',
+                'umkm-alliance-3',
                 'transfer-between-merchants',
                 [Cl.address(fromMerchant), Cl.address(toMerchant), Cl.uint(100)],
                 fromMerchant
@@ -471,7 +471,7 @@ describe("umkm alliance contract", () => {
             const toMerchantName = "Zero Amount To";
 
             const registerFromResult = simnet.callPublicFn(
-                'umkm-alliance',
+                'umkm-alliance-3',
                 'register-merchant',
                 [Cl.address(fromMerchant), Cl.stringAscii(fromMerchantName)],
                 fromMerchant
@@ -479,7 +479,7 @@ describe("umkm alliance contract", () => {
             expect(registerFromResult.result).toEqual({ type: 'ok', value: { type: 'true' } });
 
             const registerToResult = simnet.callPublicFn(
-                'umkm-alliance',
+                'umkm-alliance-3',
                 'register-merchant',
                 [Cl.address(toMerchant), Cl.stringAscii(toMerchantName)],
                 toMerchant
@@ -487,7 +487,7 @@ describe("umkm alliance contract", () => {
             expect(registerToResult.result).toEqual({ type: 'ok', value: { type: 'true' } });
 
             const transferResult = simnet.callPublicFn(
-                'umkm-alliance',
+                'umkm-alliance-3',
                 'transfer-between-merchants',
                 [Cl.address(fromMerchant), Cl.address(toMerchant), Cl.uint(0)],
                 fromMerchant

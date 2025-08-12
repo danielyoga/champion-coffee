@@ -6,7 +6,7 @@ import { showConnect } from "@stacks/connect";
 
 // Contract details
 const CONTRACT_ADDRESS = "ST1R6WTW58RQFZPMMFYHZA663838XZDW1RVXC58N9";
-const CONTRACT_NAME = "umkm-alliance-1";
+const CONTRACT_NAME = "umkm-alliance-3";
 const FUNCTION_NAME = "mint-for-purchase";
 
 export async function mintForPurchase(customerAddress: string) {

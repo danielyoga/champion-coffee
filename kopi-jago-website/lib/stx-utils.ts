@@ -23,7 +23,7 @@ export async function getStxBalance(address: string) {
 export async function getAllianceTokenBalance(address: string) {
     const baseUrl = "https://api.testnet.hiro.so";
     const contractAddress = "ST1R6WTW58RQFZPMMFYHZA663838XZDW1RVXC58N9";
-    const contractName = "umkm-alliance-1";
+    const contractName = "umkm-alliance-3";
     const tokenName = "alliance-token";
 
     const url = `${baseUrl}/extended/v1/address/${address}/balances`;
@@ -64,7 +64,7 @@ export async function getAllianceTokenBalance(address: string) {
 export async function testContractBalance(address: string) {
     const baseUrl = "https://api.testnet.hiro.so";
     const contractAddress = "ST1R6WTW58RQFZPMMFYHZA663838XZDW1RVXC58N9";
-    const contractName = "umkm-alliance-1";
+    const contractName = "umkm-alliance-3";
 
     // Use the correct endpoint for reading contract functions
     const url = `${baseUrl}/v2/contracts/call-read/${contractAddress}/${contractName}/get-balance`;

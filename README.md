@@ -1,6 +1,6 @@
 # Champion Coffee - Stacks Wallet Integration
 
-**Smart Contract Address**: `ST1R6WTW58RQFZPMMFYHZA663838XZDW1RVXC58N9.umkm-alliance-1`
+**Smart Contract Address**: `ST1R6WTW58RQFZPMMFYHZA663838XZDW1RVXC58N9.umkm-alliance-3`
 
 ## Project: Champion Coffee - UMKM Alliance Platform
 

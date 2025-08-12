@@ -63,7 +63,7 @@ plan:
     - id: 0
       transactions:
         - emulated-contract-publish:
-            contract-name: umkm-alliance
+            contract-name: umkm-alliance-3
             emulated-sender: ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM
             path: contracts/umkm-alliance.clar
             clarity-version: 3
